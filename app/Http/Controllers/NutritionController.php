@@ -9,7 +9,7 @@ class NutritionController extends Controller
 {
     public function index()
     {
-        // awalnya belum ada hasil
+        // Saat pertama kali halaman dibuka, belum ada hasil
         return view('nutrition.index', ['result' => null]);
     }
 
@@ -17,10 +17,11 @@ class NutritionController extends Controller
     {
         $food = $request->input('food');
 
-        $appId = config('services.edamam.app_id');
-        $appKey = config('services.edamam.app_key');
+        // Karena masih testing lokal, masukkan langsung
+        $appId = 'e8cefced';
+        $appKey = '8a011b7ccd9f1e8065d869324f0081a4';
 
-        // panggil API Edamam
+        // Panggil API Edamam
         $response = Http::get('https://api.edamam.com/api/nutrition-data', [
             'app_id' => $appId,
             'app_key' => $appKey,
@@ -28,12 +29,13 @@ class NutritionController extends Controller
         ]);
 
         if (!$response->successful()) {
-            return back()->withErrors(['msg' => 'Gagal mengambil data dari API.']);
+            return back()->withErrors(['msg' => 'Gagal mengambil data nutrisi dari API.']);
         }
 
         $data = $response->json();
         $nutrients = $data['ingredients'][0]['parsed'][0]['nutrients'] ?? [];
 
+        // Ambil poin-poin utama
         $result = [
             'food' => $food,
             'calories' => $nutrients['ENERC_KCAL']['quantity'] ?? 0,
