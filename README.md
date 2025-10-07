@@ -1,3 +1,6 @@
+## Nutrify
+<img width="2233" height="1049" alt="Screenshot 2025-10-07 205525" src="https://github.com/user-attachments/assets/4a076060-e760-4e83-af55-25ff3ebee83a" />
+
 ## Instalation
 Clone Repository
 ```sh
